@@ -6,11 +6,10 @@ WORKDIR /app
 
 # Copy package files and install dependencies
 COPY package*.json ./
-COPY tsconfig.json ./
 RUN npm install
 
 # Copy source code
-COPY src ./src
+COPY . .
 
 # Build the TypeScript code
 RUN npm run build
@@ -26,6 +25,9 @@ COPY --from=builder /app/node_modules ./node_modules
 
 # Copy the built code
 COPY --from=builder /app/dist ./dist
+
+# Copy package.json to use module-alias
+COPY package.json .
 
 # Set environment variables if needed
 ENV NODE_ENV=production
