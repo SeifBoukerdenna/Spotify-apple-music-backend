@@ -1,4 +1,3 @@
-import "module-alias/register"; // Ensure module-alias works in production
 import express from "express";
 import tokenRoutes from "@/routes/tokenRoutes";
 

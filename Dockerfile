@@ -11,7 +11,7 @@ RUN npm install
 # Copy source code
 COPY . .
 
-# Build the TypeScript code
+# Build the TypeScript code and replace path aliases
 RUN npm run build
 
 # Stage 2: Production
@@ -26,7 +26,7 @@ COPY --from=builder /app/node_modules ./node_modules
 # Copy the built code
 COPY --from=builder /app/dist ./dist
 
-# Copy package.json to use module-alias
+# Copy package.json (optional if needed)
 COPY package.json .
 
 # Set environment variables if needed
@@ -37,4 +37,4 @@ ENV PORT=3000
 EXPOSE 3000
 
 # Start the application
-CMD ["node", "-r", "module-alias/register", "dist/app.js"]
+CMD ["node", "dist/app.js"]

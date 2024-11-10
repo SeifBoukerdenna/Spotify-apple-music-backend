@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.generateDeveloperToken = generateDeveloperToken;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const fs_1 = __importDefault(require("fs"));
-const config_1 = __importDefault(require("@/config"));
+const config_1 = __importDefault(require("../config"));
 function generateDeveloperToken() {
     let privateKey;
     try {

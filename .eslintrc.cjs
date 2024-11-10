@@ -37,6 +37,7 @@ module.exports = {
       },
     },
   ],
+  ignorePatterns: ['dist/'], // Ignore the dist directory
   rules: {
     // Global rules
     'no-undef': 'off', // Optional: Turn off no-undef if unnecessary
