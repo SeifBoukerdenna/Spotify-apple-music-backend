@@ -2,18 +2,19 @@
   "name": "spotify-to-apple-music-backend",
   "version": "1.0.0",
   "main": "index.js",
-"scripts": {
-  "start": "node dist/app.js",
-  "build": "tsc",
-  "dev": "ts-node src/app.ts"
-},
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "scripts": {
+    "start": "node -r module-alias/register dist/app.js",
+    "build": "tsc",
+    "dev": "ts-node -r tsconfig-paths/register src/app.ts"
+  },
+  "_moduleAliases": {
+    "@": "dist",
+    "$": "."
+  },
   "dependencies": {
     "express": "^4.21.1",
-    "jsonwebtoken": "^9.0.2"
+    "jsonwebtoken": "^9.0.2",
+    "module-alias": "^2.2.3"
   },
   "devDependencies": {
     "@types/express": "^5.0.0",

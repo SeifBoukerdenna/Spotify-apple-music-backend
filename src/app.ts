@@ -1,19 +1,15 @@
-import express, { Request, Response } from "express";
-import { generateDeveloperToken } from "./generateToken";
+import "module-alias/register"; // Ensure module-alias works in production
+import express from "express";
+import tokenRoutes from "@/routes/tokenRoutes";
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.get("/getDeveloperToken", (req: Request, res: Response) => {
-  try {
-    const token = generateDeveloperToken();
-    res.status(200).json({ token });
-  } catch (error) {
-    console.error("Error generating token:", error);
-    res.status(500).json({ error: "Failed to generate token" });
-  }
-});
+// Setup routes and other configurations here
+app.use("/api", tokenRoutes);
 
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
 });
+
+export default app;
