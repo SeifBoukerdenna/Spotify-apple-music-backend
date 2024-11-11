@@ -7,6 +7,13 @@ exports.generateDeveloperToken = generateDeveloperToken;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const fs_1 = __importDefault(require("fs"));
 const config_1 = __importDefault(require("../config"));
+// Generate a new, unique payload for each request
+function createUniquePayload() {
+    return {
+        timestamp: Date.now(),
+        random: Math.random().toString(36).substring(2),
+    };
+}
 function generateDeveloperToken() {
     let privateKey;
     try {
@@ -17,9 +24,10 @@ function generateDeveloperToken() {
         throw new Error("Private key file not found");
     }
     try {
-        const token = jsonwebtoken_1.default.sign({}, privateKey, {
+        const payload = createUniquePayload();
+        const token = jsonwebtoken_1.default.sign(payload, privateKey, {
             algorithm: "ES256",
-            expiresIn: config_1.default.tokenExpiresIn,
+            expiresIn: "30s", // Token valid for only 1 minute
             issuer: config_1.default.teamId,
             header: {
                 alg: "ES256",

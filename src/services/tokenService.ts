@@ -2,6 +2,14 @@ import jwt from "jsonwebtoken";
 import fs from "fs";
 import config from "@/config";
 
+// Generate a new, unique payload for each request
+function createUniquePayload() {
+  return {
+    timestamp: Date.now(),
+    random: Math.random().toString(36).substring(2),
+  };
+}
+
 export function generateDeveloperToken(): string {
   let privateKey: Buffer;
 
@@ -13,9 +21,10 @@ export function generateDeveloperToken(): string {
   }
 
   try {
-    const token = jwt.sign({}, privateKey, {
+    const payload = createUniquePayload();
+    const token = jwt.sign(payload, privateKey, {
       algorithm: "ES256",
-      expiresIn: config.tokenExpiresIn,
+      expiresIn: "30s", // Token valid for only 1 minute
       issuer: config.teamId,
       header: {
         alg: "ES256",
