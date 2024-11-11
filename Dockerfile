@@ -29,12 +29,15 @@ COPY --from=builder /app/dist ./dist
 # Copy package.json (optional if needed)
 COPY package.json .
 
-# **Copy the secrets file to /etc/secrets/ inside the container**
+# **Copy the secrets file to /app/etc/secrets/ inside the container**
 # Create the target directory
-RUN mkdir -p /etc/secrets
+RUN mkdir -p /app/etc/secrets
 
 # Copy the secret key
-COPY etc/secrets/AuthKey_8MQTX7S357.p8 /etc/secrets/AuthKey_8MQTX7S357.p8
+COPY etc/secrets/AuthKey_8MQTX7S357.p8 /app/etc/secrets/AuthKey_8MQTX7S357.p8
+
+# **(Optional) Set appropriate permissions for the secrets file**
+RUN chmod 600 /app/etc/secrets/AuthKey_8MQTX7S357.p8
 
 # Set environment variables if needed
 ENV NODE_ENV=production
