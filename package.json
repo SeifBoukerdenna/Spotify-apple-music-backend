@@ -2,16 +2,15 @@
   "name": "spotify-to-apple-music-backend",
   "version": "1.0.0",
   "main": "index.js",
-"scripts": {
-  "start": "node dist/app.js",
-  "build": "tsc && tsc-alias",
-  "dev": "ts-node -r tsconfig-paths/register src/app.ts",
-  "test": "jest",
-  "prepare": "husky install",
-  "lint": "eslint 'src/**/*.{js,ts,jsx,tsx}'"
-}
-,
-"lint-staged": {
+  "scripts": {
+    "start": "node dist/app.js",
+    "build": "tsc && tsc-alias",
+    "dev": "ts-node -r tsconfig-paths/register src/app.ts",
+    "test": "jest",
+    "prepare": "husky install",
+    "lint": "eslint 'src/**/*.{js,ts,jsx,tsx}'"
+  },
+  "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx}": [
       "eslint --fix"
     ],
@@ -21,6 +20,7 @@
     ]
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "jsonwebtoken": "^9.0.2"
