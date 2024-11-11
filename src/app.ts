@@ -13,16 +13,7 @@ const allowedOrigins = [
 ];
 
 // CORS configuration options
-interface CorsOptions {
-  origin: (
-    origin: string | undefined,
-    callback: (err: Error | null, allow?: boolean) => void
-  ) => void;
-  methods: string;
-  credentials: boolean;
-}
-
-const corsOptions: CorsOptions = {
+const corsOptions: cors.CorsOptions = {
   origin: function (origin, callback) {
     // Allow requests with no origin (like mobile apps or curl requests)
     if (!origin) return callback(null, true);
@@ -41,11 +32,30 @@ const corsOptions: CorsOptions = {
 // Apply the CORS middleware to all incoming requests
 app.use(cors(corsOptions));
 
-// If you want to enable CORS for specific routes only, you can apply it like this:
-// app.use("/api", cors(corsOptions), tokenRoutes);
+// Handle preflight OPTIONS requests for all routes
+app.options("*", cors(corsOptions));
+
+// Middleware to parse JSON bodies
+app.use(express.json());
 
 // Route setup
 app.use("/api", tokenRoutes);
+
+// Global error handler for CORS
+app.use(
+  (
+    err: Error,
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) => {
+    if (err.message === "Not allowed by CORS") {
+      res.status(403).json({ message: err.message });
+    } else {
+      next(err);
+    }
+  }
+);
 
 /**
  * Start server.
